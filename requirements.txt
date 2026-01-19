@@ -1,0 +1,5 @@
+Django
+openpyxl
+xhtml2pdf
+python-dotenv
+mysqlclient

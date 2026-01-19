@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+
+{% block title %}Settings - Finance App{% endblock %}
+{% block page_title %}Settings{% endblock %}
+
+{% block content %}
+<div class="row">
+    <!-- Bank Account Section -->
+    <div class="col-lg-6 mb-4">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary">Bank Account</h6>
+                <a href="{% url 'bank_account_update' %}" class="btn btn-sm btn-primary">
+                    <i class="fas fa-edit me-1"></i> Update
+                </a>
+            </div>
+            <div class="card-body">
+                {% if bank_account %}
+                <p><strong>Bank Name:</strong> {{ bank_account.bank_name }}</p>
+                <p><strong>Account Number:</strong> {{ bank_account.account_number }}</p>
+                {% else %}
+                <p class="text-muted">No valid bank account connected.</p>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Wallets Section -->
+        <div class="card shadow mb-4">
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary">Wallets</h6>
+                <a href="{% url 'wallet_create' %}" class="btn btn-sm btn-success">
+                    <i class="fas fa-plus me-1"></i> Add Wallet
+                </a>
+            </div>
+            <ul class="list-group list-group-flush">
+                {% for wallet in wallets %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    {{ wallet.name }}
+                    <span class="badge bg-secondary rounded-pill">₦{{ wallet.current_balance }}</span>
+                </li>
+                {% empty %}
+                <li class="list-group-item text-muted">No wallets created.</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+    <!-- Distribution Rules Section -->
+    <div class="col-lg-6 mb-4">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary">Distribution Rules</h6>
+                <a href="{% url 'distribution_create' %}" class="btn btn-sm btn-info">
+                    <i class="fas fa-plus me-1"></i> Add Rule
+                </a>
+            </div>
+            <div class="table-responsive">
+                <table class="table align-middle mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Wallet</th>
+                            <th>Percentage</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for setting in distribution_settings %}
+                        <tr>
+                            <td>{{ setting.wallet.name }}</td>
+                            <td>{{ setting.percentage }}%</td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="2" class="text-center text-muted">No distribution rules set.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

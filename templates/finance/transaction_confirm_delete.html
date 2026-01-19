@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}Delete Transaction - Finance App{% endblock %}
+{% block page_title %}Delete Transaction{% endblock %}
+
+{% block content %}
+<div class="alert alert-danger">
+    <h4 class="alert-heading">Confirm Deletion</h4>
+    <p>Are you sure you want to delete the transaction: <strong>{{ object }}</strong>? This action cannot be undone.</p>
+    <hr>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Yes, Delete</button>
+        <a href="{% url 'transaction_list' %}" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+{% endblock %}

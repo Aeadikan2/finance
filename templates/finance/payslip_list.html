@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block title %}Payslips - Finance App{% endblock %}
+{% block page_title %}Payslips{% endblock %}
+
+{% block content %}
+<div class="card mb-4">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <span><i class="fas fa-file-invoice-dollar me-1"></i> Employee Payslips</span>
+        <a href="{% url 'payslip_create' %}" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> Generate New</a>
+    </div>
+    <div class="card-body">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Month</th>
+                    <th>Employee</th>
+                    <th>Basic</th>
+                    <th>Net Salary</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for slip in payslips %}
+                <tr>
+                    <td>{{ slip.month|date:"M Y" }}</td>
+                    <td>{{ slip.employee_name }}</td>
+                    <td>₦{{ slip.basic_salary }}</td>
+                    <td><strong>₦{{ slip.net_salary }}</strong></td>
+                    <td>
+                        <a href="{% url 'payslip_pdf' slip.pk %}" class="btn btn-danger btn-sm" target="_blank">
+                            <i class="fas fa-file-pdf"></i> Download PDF
+                        </a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="5" class="text-center">No payslips found.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
